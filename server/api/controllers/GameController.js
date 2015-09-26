@@ -21,7 +21,7 @@ module.exports = {
       if (err || games.length == 0) {
         res.notFound();
       } else {
-        res.json(game[0]);
+        res.json(games[0]);
       }
     });
 
