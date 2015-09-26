@@ -57,17 +57,20 @@
                 android:text="YES"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/button"
                 />
 
         <Button
             android:text="NO"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/button"/>
 
         <Button
             android:text="NO ANSWER"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/button"/>
 
 
 
