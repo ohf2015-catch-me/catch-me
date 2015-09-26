@@ -2,6 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+<<<<<<< HEAD
+=======
     <mapping directory="$PROJECT_DIR$/android-client" vcs="Git" />
+>>>>>>> 2cdcfd54ae0f7efa334d70a25f952c89717efba5
   </component>
 </project>

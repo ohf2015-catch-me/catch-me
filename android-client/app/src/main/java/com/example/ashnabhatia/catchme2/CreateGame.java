@@ -4,6 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.json.JSONObject;
 
 public class CreateGame extends AppCompatActivity {
 
@@ -11,6 +16,19 @@ public class CreateGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_game);
+
+        Button button = (Button) findViewById(R.id.submit_game_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView text = (TextView)findViewById(R.id.create_game_text);
+                HttpApi.createGame(text.getText().toString(), null, new HttpApi.ApiObjectListener() {
+                    @Override
+                    public void onDone(JSONObject result) {
+                        finish();
+                    }
+                });
+            }
+        });
     }
 
     @Override

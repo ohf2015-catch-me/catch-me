@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -21,7 +23,7 @@ public class GamesListActivity extends ListActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // note that use read_comments.xml instead of our single_post.xml
-        setContentView(R.layout.activity_load_screen);
+        setContentView(R.layout.activity_game_list);
         mCreateGame = (Button)findViewById(R.id.buttoncg);
         mCreateGame.setOnClickListener(this);
 
@@ -43,7 +45,19 @@ public class GamesListActivity extends ListActivity implements View.OnClickListe
                 return view;
             }
         };
-
+        ListView lv = (ListView)findViewById(android.R.id.list);
+        lv.setAdapter(mAdapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Intent intent;
+                intent = new Intent(GamesListActivity.this, Scout.class);
+                //String message = "abc";
+                //intent.putExtra(EXTRA_MESSAGE, message);
+                startActivity(intent);
+            }
+        });
         setListAdapter(mAdapter);
     }
 

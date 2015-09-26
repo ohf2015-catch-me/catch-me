@@ -1,58 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:padding="10dp">
 <TextView
     android:id="@+id/t1"
-    android:text="Want to be a target/create game"
+    style="@style/headline"
+    android:text="Create a game"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:textSize="40dp"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true" />
+/>
 <TextView
     android:id="@+id/t2"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="Give the scouts an intial hint..."
-    android:layout_below="@+id/t1"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="110dp" />
+    android:paddingTop="10dp"/>
     <EditText
-        android:id="@+id/e1"
+        android:id="@+id/create_game_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/t2"/>
+/>
     <TextView
         android:layout_width="fill_parent"
         android:text="Take a picture of your environment..."
         android:layout_height="wrap_content"
-        android:layout_above="@+id/ImageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+/>
     <ImageView android:id="@+id/ImageView"
         android:layout_width="fill_parent"
 
-        android:layout_height="100dp"
-        android:layout_alignRight="@+id/Caption"
-        android:layout_alignEnd="@+id/Caption"
-        android:layout_above="@+id/Upload" />
+        android:layout_height="wrap_content"
+               android:layout_weight="1"/>
 
-    <Button android:layout_width="wrap_content" android:id="@+id/Upload"
+    <Button android:layout_width="match_parent" android:id="@+id/Upload"
 
-        android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+        android:layout_height="wrap_content"
 
-        android:layout_alignParentBottom="true" android:text="Upload" />
-    <EditText android:id="@+id/Caption" android:layout_width="500px"
-
-        android:layout_height="wrap_content" android:hint="Write caption"
-
-        android:singleLine="true" android:layout_toRightOf="@id/Upload"
-
-        android:layout_alignParentBottom="true" />
+         android:text="Create Game" />
 
 
-
-</RelativeLayout>
+</LinearLayout>

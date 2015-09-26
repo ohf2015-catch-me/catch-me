@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+	<TextView
+	    style="@style/headline"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    android:gravity="center"
+	    android:text="List of games"
+	    android:layout_width="wrap_content" />
+
+	<ScrollView
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/scrollView"
+		android:fillViewport="true"
+		android:layout_weight="1">
+
+		<ListView
+
+	        android:id="@android:id/list"
+		    android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+
+	        android:divider="@android:color/transparent"
+	        android:clickable="false"/>
+	</ScrollView>
+
+	<Button
+	    android:id="@+id/buttoncg"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="Create Game"
+	    android:layout_gravity="bottom"
+	    android:layout_weight="0"
+		/>
+
+</LinearLayout>
