@@ -7,12 +7,13 @@
 var uuid = require('node-uuid');
 
 
-var findActiveGameForUser = function(user, callback) {
-  Game.find({ user: user.uuid }).exec(function(err, games) {
-    var activeGames = games.filter(function(game) {
+var findActiveGameForUser = function (user, callback) {
+  Game.find().populate('owner', {owner: user.uuid}).exec(function (err, games) {
+    console.log("Games for user: ", games)
+    var activeGames = games.filter(function (game) {
       return game.isActive();
     });
-    if(activeGames.length == 0) {
+    if (activeGames.length == 0) {
       callback(null);
     }
     else {
@@ -23,15 +24,16 @@ var findActiveGameForUser = function(user, callback) {
 
 module.exports = {
 
-	create: function(req, res){
-    UserService.findUserForRequest(req, function(err, user) {
-      findActiveGameForUser(user, function(game) {
-        if(game) {
+  create: function (req, res) {
+    UserService.findUserForRequest(req, function (err, user) {
+      findActiveGameForUser(user, function (game) {
+        if (game) {
           res.badRequest();
         }
         else {
           var data = req.body;
           data.uuid = uuid.v4();
+          data.owner = user.uuid;
           Game.create(data).exec(function (err, game) {
             console.log('created game: ' + data.uuid);
             res.json(game);
@@ -42,7 +44,8 @@ module.exports = {
   },
 
   getDetails: function(req, res) {
-    Game.find(req.param('gameId')).exec(function(err, games){
+    var gameId = req.param('gameId');
+    Game.find(gameId).populate('questions').exec(function(err, games){
       if (err || games.length == 0) {
         res.notFound();
       } else {
@@ -52,10 +55,10 @@ module.exports = {
 
   },
 
-  getMyGame: function(req, res) {
-    UserService.findUserForRequest(req, function(err, user) {
-      findActiveGameForUser(user, function(game) {
-        if(game) {
+  getMyGame: function (req, res) {
+    UserService.findUserForRequest(req, function (err, user) {
+      findActiveGameForUser(user, function (game) {
+        if (game) {
           res.json(game);
         }
         else {
@@ -65,7 +68,7 @@ module.exports = {
     });
   },
 
-  getFound: function(req, res) {
+  getFound: function (req, res) {
 
   }
 
