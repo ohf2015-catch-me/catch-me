@@ -39,8 +39,10 @@ public abstract class GamesListAdapter extends BaseAdapter
             HttpApi.getGameDetails(gameId, new HttpApi.ApiObjectListener() {
                 @Override
                 public void onDone(JSONObject result) {
-                    games.put(gameId, result);
-                    onGamesUpdated();
+                    if(result != null) {
+                        games.put(gameId, result);
+                        onGamesUpdated();
+                    }
                 }
             });
         }

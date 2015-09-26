@@ -8,7 +8,7 @@ import java.net.URL;
 /**
  * Created by bananer on 26.09.15.
  */
-public final class ApiUris {
+public final class ApiUrls {
 
     protected static final String PROTOCOL = "http";
     protected static final String HOST = "localhost";
@@ -24,5 +24,9 @@ public final class ApiUris {
 
     public static URL gameDetails(String gameId) {
         return buildURL("/game/" + gameId);
+    }
+
+    public static URL createGame() {
+        return buildURL("/game");
     }
 }
