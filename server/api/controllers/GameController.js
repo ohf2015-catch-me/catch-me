@@ -17,6 +17,16 @@ module.exports = {
     });
   },
 
+  getDetails: function(req, res) {
+    var data = req.body;
+    var user = data.owner;
+    if (checkUserId.checkIfUserExists(user)) {
+      res.json(Game.find({ owner: user }));
+    } else {
+      res.notFound();
+    }
+  }
+
 
 
 

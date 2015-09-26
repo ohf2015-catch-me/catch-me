@@ -6,6 +6,12 @@
  */
 
 module.exports = {
-	
+  create: function(req, res){
+    var data = req.body;
+    data.uuid = uuid.v4();
+    Question.create(data).done(function(err, question) {
+      res.json(question);
+    });
+  }
 };
 

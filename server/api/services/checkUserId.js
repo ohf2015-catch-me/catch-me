@@ -2,6 +2,6 @@
 
 module.exports = {
   checkIfUserExists: function(user) {
-    return !!User.find(user);
+    return User.find(user);
   }
 };
