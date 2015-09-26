@@ -46,7 +46,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  ,'put /game/:gameId/question/:questionId': 'QuestionController.answerQuestion'
+  ,'put /game/:gameId/question/:questgit ionId': 'QuestionController.answerQuestion'
   ,'post /game/:gameId/question': 'QuestionController.create'
   ,'post /game/:gameId/hint': 'HintController.create'
   ,'get /game/:gameId': 'GameController.getDetails'
