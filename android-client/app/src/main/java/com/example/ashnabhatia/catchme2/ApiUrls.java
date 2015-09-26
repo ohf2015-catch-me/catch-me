@@ -29,4 +29,12 @@ public final class ApiUrls {
     public static URL createGame() {
         return buildURL("/game");
     }
+
+    public static URL createQuestion(String gameId) {
+        return buildURL("/game/"+gameId+"/question");
+    }
+
+    public static URL answerQuestion(String gameId, String questionId) {
+        return buildURL("/game/"+gameId+"/question/" + questionId);
+    }
 }
