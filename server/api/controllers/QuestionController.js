@@ -12,6 +12,12 @@ module.exports = {
     Question.create(data).done(function(err, question) {
       res.json(question);
     });
+  },
+
+  answerQuestion: function(req, res) {
+    //uuid?
+    var data = req.body;
+    res.json(data);
   }
 };
 

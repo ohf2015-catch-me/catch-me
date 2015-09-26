@@ -8,9 +8,17 @@
 module.exports = {
 
   attributes: {
-    game: {
-      model: 'game'
+    text: {
+      type: 'string'
+      ,required: true
     }
-  }
+    ,picture: {
+      type: 'string'
+      ,required: true
+    }
+   ,game: {
+      model: 'game'
+      }
+    }
 };
 
