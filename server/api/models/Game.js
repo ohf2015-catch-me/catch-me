@@ -33,6 +33,9 @@ module.exports = {
       collection: 'hint'
       ,via: 'game'
     }
+    ,owner: {
+      model: 'user'
+    }
   }
 };
 
