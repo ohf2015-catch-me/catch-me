@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -24,6 +25,7 @@ public class CreateGame extends AppCompatActivity {
                 HttpApi.createGame(text.getText().toString(), null, new HttpApi.ApiObjectListener() {
                     @Override
                     public void onDone(JSONObject result) {
+                        Toast.makeText(CreateGame.this, "Game created!", Toast.LENGTH_SHORT);
                         finish();
                     }
                 });

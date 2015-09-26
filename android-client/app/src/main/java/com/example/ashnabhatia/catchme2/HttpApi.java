@@ -207,7 +207,7 @@ public final class HttpApi {
         userId = prefs.getString("userId", "");
         if(userId.equals("")) {
             userId = UUID.randomUUID().toString();
-            prefs.edit().putString("userId", userId).commit();
+            prefs.edit().putString("userId", userId);
         }
     }
 
