@@ -4,7 +4,8 @@
 
 ### Game details: GET /game/{gameId}
 repose:
-`{
+```
+{
 	uuid: 'asdsadsaddsa'
 	,text: 'Find me!'
 	,picture: 'http://asdsadsa/asdsad.jpg'
@@ -21,7 +22,8 @@ repose:
 			,answer: 'y' (y/n/optional)
 		}
 	]
-}`
+}
+```
 
 ### Create game: POST /game
 
