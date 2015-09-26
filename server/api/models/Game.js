@@ -36,6 +36,10 @@ module.exports = {
     ,owner: {
       model: 'user'
     }
+    ,secret: {
+      type: 'string'
+      , required: true
+    }
     ,isActive: function() {
       return this.endTime < Date.now();
     }

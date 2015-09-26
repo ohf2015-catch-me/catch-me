@@ -34,6 +34,7 @@ module.exports = {
           var data = req.body;
           data.uuid = uuid.v4();
           data.owner = user.uuid;
+          data.secret = Math.floor(Math.random() * (9999 - 1000)) + 1000;
           Game.create(data).exec(function (err, game) {
             console.log('created game: ' + data.uuid);
             res.json(game);
@@ -49,7 +50,9 @@ module.exports = {
       if (err || games.length == 0) {
         res.notFound();
       } else {
-        res.json(games[0]);
+        var game = games[0].toObject();
+        delete game.secret;
+        res.json(game);
       }
     });
 
@@ -69,7 +72,14 @@ module.exports = {
   },
 
   getFound: function (req, res) {
-
+    var secretCode = req.body.secret;
+    Game.find(req.param('gameId')).exec(function(err, game) {
+      if (err || secretCode !== game[0].secret) {
+        res.notFound();
+      } else {
+        res.json()
+      }
+    });
   }
 
 

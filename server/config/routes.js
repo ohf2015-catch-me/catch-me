@@ -49,6 +49,7 @@ module.exports.routes = {
   ,'put /game/:gameId/question/:questgit ionId': 'QuestionController.answerQuestion'
   ,'post /game/:gameId/question': 'QuestionController.create'
   ,'post /game/:gameId/hint': 'HintController.create'
+  ,'post /game/:gameId/found': 'GameController.getFound'
   ,'get /game/:gameId': 'GameController.getDetails'
   ,'get /my-game': 'GameController.getMyGame'
   ,'post /game': 'GameController.create'
