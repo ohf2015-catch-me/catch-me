@@ -5,10 +5,10 @@
     android:layout_width="fill_parent" android:layout_height="fill_parent">
 <TextView
     android:id="@+id/t1"
+    style="@style/headline"
     android:text="Want to be a target/create game"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:textSize="40dp"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true" />
 <TextView
