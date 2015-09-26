@@ -1,5 +1,7 @@
 package com.example.ashnabhatia.catchme2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Base64;
@@ -18,11 +20,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.UUID;
 
 /**
  * Created by bananer on 26.09.15.
  */
 public final class HttpApi {
+
+    private static final String userIdHeaderField = "catch-me-uuid";
+    private static String userId;
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         try {
@@ -68,6 +74,8 @@ public final class HttpApi {
             try {
 
                 HttpURLConnection conn = getConnection();
+
+                conn.setRequestProperty(userIdHeaderField, userId);
 
                 try {
                     conn.connect();
@@ -194,10 +202,23 @@ public final class HttpApi {
         void onDone(T result);
     }
 
+    public static void setupAuth(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("CatchMeHttpApi", 0);
+        userId = prefs.getString("userId", "");
+        if(userId.equals("")) {
+            userId = UUID.randomUUID().toString();
+            prefs.edit().putString("userId", userId).commit();
+        }
+    }
+
     public interface ApiObjectListener extends ApiListener<JSONObject> {}
 
     public static void getGameDetails(String gameId, ApiObjectListener listener) {
         (new GetJSONObjectRequest(ApiUrls.gameDetails(gameId), listener)).execute();
+    }
+
+    public static void getMyGame(ApiObjectListener listener) {
+        (new GetJSONObjectRequest(ApiUrls.myGame(), listener)).execute();
     }
 
     public static void createGame(final String text, final Bitmap picture, ApiObjectListener listener) {
