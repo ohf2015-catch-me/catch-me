@@ -11,6 +11,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,14 +25,20 @@ import java.net.URLEncoder;
 public final class HttpApi {
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
+        try {
 
-        inputStream.close();
-        return result;
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line = "";
+            String result = "";
+            while ((line = bufferedReader.readLine()) != null)
+                result += line;
+
+            inputStream.close();
+            return result;
+        }
+        catch(EOFException ex) {
+            return "";
+        }
     }
 
     private static String encodeBitmap(Bitmap bitmap) {
@@ -74,6 +81,7 @@ public final class HttpApi {
                 return convertResponse(result);
 
             } catch (Exception e) {
+                e.printStackTrace();
                 return null;
             }
         }
