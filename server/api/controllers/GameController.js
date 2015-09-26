@@ -8,7 +8,8 @@ var uuid = require('node-uuid');
 
 
 var findActiveGameForUser = function (user, callback) {
-  User.find(user.uuid).populate('games').exec(function(err, games) {
+  User.findOne(user.uuid).populate('games').exec(function(err, u) {
+    var games = u.games;
     console.log("Games for user: ", games);
     var activeGames = games.filter(function (game) {
       return game.isActive();
