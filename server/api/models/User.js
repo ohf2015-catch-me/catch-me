@@ -8,6 +8,11 @@
 module.exports = {
 
   attributes: {
+    uuid: {
+      type: 'string',
+      primaryKey: true,
+      required: true
+    },
     games: {
       collection: 'game',
       via: 'owner'

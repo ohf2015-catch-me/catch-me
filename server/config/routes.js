@@ -50,6 +50,7 @@ module.exports.routes = {
   ,'post /game/:gameId/question': 'QuestionController.create'
   ,'post /game/:gameId/hint': 'HintController.create'
   ,'get /game/:gameId': 'GameController.getDetails'
+  ,'get /my-game': 'GameController.getMyGame'
   ,'post /game': 'GameController.create'
 
 
