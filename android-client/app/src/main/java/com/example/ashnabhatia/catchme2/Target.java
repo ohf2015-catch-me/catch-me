@@ -31,6 +31,9 @@ public class Target extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+	    if (id == R.id.action_abort_game) {
+		    //TODO: Abort the game
+	    }
 
         return super.onOptionsItemSelected(item);
     }
