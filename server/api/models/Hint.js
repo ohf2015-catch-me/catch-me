@@ -8,13 +8,16 @@
 module.exports = {
 
   attributes: {
-    text: {
+    uuid: {
+      type: 'string',
+      primaryKey: true,
+      required: true
+    }
+    ,text: {
       type: 'string'
-      ,required: true
     }
     ,picture: {
       type: 'string'
-      ,required: true
     }
    ,game: {
       model: 'game'

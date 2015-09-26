@@ -17,6 +17,9 @@ module.exports = {
       type: 'string'
       ,required: true
     }
+    ,answer: {
+      type: 'string'
+    }
     ,game: {
       model: 'game'
     }
