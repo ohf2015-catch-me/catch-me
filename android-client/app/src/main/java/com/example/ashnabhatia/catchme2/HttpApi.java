@@ -74,7 +74,6 @@ public final class HttpApi {
                 return convertResponse(result);
 
             } catch (Exception e) {
-                Log.d("InputStream", e.getLocalizedMessage());
                 return null;
             }
         }
