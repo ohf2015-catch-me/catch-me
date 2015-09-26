@@ -13,16 +13,13 @@
         android:orientation="horizontal" >
 
         <TextView
+	        style="@style/headline"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Hint:"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="wrap_content" />
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Here is the hint"/>
+            android:text="Initial hint/name of the game"
+            android:layout_width="wrap_content"/>
+
     </LinearLayout>
 
 
@@ -30,7 +27,6 @@
         android:id="@+id/list1"
         android:layout_width="fill_parent"
         android:layout_height="300dip"
-        android:background="#fff"
 
         android:divider="@android:color/transparent"
         android:layout_below="@+id/top_layover1"
@@ -47,7 +43,9 @@
         android:layout_alignParentLeft="true"
         android:orientation="horizontal"
         android:layout_below="@+id/list1"
-        android:weightSum="2" >
+        android:weightSum="2"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false">
 
 
         <EditText
@@ -67,20 +65,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 </LinearLayout>
+
     <ImageView
         android:layout_width="100dip"
         android:layout_height="100dip"
         android:id="@+id/imageView"
         android:layout_gravity="center_vertical"
         android:layout_below="@+id/bottom_layover1"/>
-
-
-
-
-
-
-
-
-
 
 </RelativeLayout>

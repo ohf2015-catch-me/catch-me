@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Target"
+            android:text="Initial hint/name of the game"
             style="@style/headline"
             android:layout_width="wrap_content" />
     </LinearLayout>
@@ -25,7 +25,6 @@
         android:id="@+id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
 
         android:divider="@android:color/transparent"
         android:layout_below="@+id/top_layover"
