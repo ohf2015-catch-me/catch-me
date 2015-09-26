@@ -46,4 +46,5 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  ,'post /game': 'GameController.create'
 };
