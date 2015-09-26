@@ -8,6 +8,7 @@ module.exports = {
     }
     User.find(uuid).exec(function(err, users){
       if(err) {
+        console.log("error retrieving user", err);
         callback(err, null);
       }
       else {
