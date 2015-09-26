@@ -8,7 +8,7 @@
 module.exports = {
 
   create: function(req, res) {
-    User.create(req.body).done(function(err, user) {
+    User.create(req.body).exec(function(err, user) {
       res.json(user);
     })
   }
