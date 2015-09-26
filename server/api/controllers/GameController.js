@@ -31,6 +31,7 @@ module.exports = {
     UserService.findUserForRequest(req, function (err, user) {
       findActiveGameForUser(user, function (game) {
         if (game) {
+          console.log('could not create game, already exists. ', game);
           res.badRequest();
         }
         else {
