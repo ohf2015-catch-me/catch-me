@@ -17,11 +17,11 @@ module.exports = {
   },
 
   getDetails: function(req, res) {
-    Game.find(req.param('gameId')).exec(function(err, game){
-      if (err) {
+    Game.find(req.param('gameId')).exec(function(err, games){
+      if (err || games.length == 0) {
         res.notFound();
       } else {
-        res.json(game);
+        res.json(game[0]);
       }
     });
 
