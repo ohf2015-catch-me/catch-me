@@ -23,7 +23,7 @@ public class GamesListActivity extends ListActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // note that use read_comments.xml instead of our single_post.xml
-        setContentView(R.layout.activity_load_screen);
+        setContentView(R.layout.activity_game_list);
         mCreateGame = (Button)findViewById(R.id.buttoncg);
         mCreateGame.setOnClickListener(this);
 

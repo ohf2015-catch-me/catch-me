@@ -5,19 +5,28 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+var uuid = require('node-uuid');
+
 module.exports = {
+
   create: function(req, res){
     var data = req.body;
     data.uuid = uuid.v4();
-    Question.create(data).done(function(err, question) {
+    data.game = req.param('gameId');
+    Question.create(data).exec(function(err, question){
       res.json(question);
     });
   },
 
   answerQuestion: function(req, res) {
-    //uuid?
-    var data = req.body;
-    res.json(data);
+    var questionId = req.param('questionId');
+    Question.update({'uuid': questionId}, {'answer': req.body.answer}).exec(function(err, answer){
+      if (err) {
+        res.badRequest();
+      } else {
+        res.json(answer);
+      }
+    });
   }
 };
 
