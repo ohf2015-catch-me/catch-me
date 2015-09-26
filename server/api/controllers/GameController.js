@@ -8,8 +8,8 @@ var uuid = require('node-uuid');
 
 
 var findActiveGameForUser = function (user, callback) {
-  Game.find().populate('owner', {where: { uuid: user.uuid }}).exec(function (err, games) {
-    console.log("Games for user: ", games)
+  User.find(user.uuid).populate('games').exec(function(err, games) {
+    console.log("Games for user: ", games);
     var activeGames = games.filter(function (game) {
       return game.isActive();
     });
