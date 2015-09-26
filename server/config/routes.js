@@ -47,4 +47,6 @@ module.exports.routes = {
   ***************************************************************************/
 
   ,'post /game': 'GameController.create'
+  ,'get /game/:gameId': 'GameController.getDetails'
+
 };

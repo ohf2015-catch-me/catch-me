@@ -11,19 +11,20 @@ module.exports = {
 	create: function(req, res){
     var data = req.body;
     data.uuid = uuid.v4();
-    Game.create(data).done(function(err, game) {
+    Game.create(data).exec(function(err, game) {
       res.json(game);
     });
   },
 
   getDetails: function(req, res) {
-    var data = req.body;
-    var user = data.owner;
-    if (checkUserId.checkIfUserExists(user)) {
-      res.json(Game.find({ owner: user }));
-    } else {
-      res.notFound();
-    }
+    Game.find(req.param('gameId')).exec(function(err, game){
+      if (err) {
+        res.notFound();
+      } else {
+        res.json(game);
+      }
+    });
+
   },
 
   getFound: function(req, res) {
