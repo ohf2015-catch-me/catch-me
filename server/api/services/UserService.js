@@ -22,8 +22,10 @@ module.exports = {
             }
           });
         }
-        console.log("user " + users[0].uuid + " authenticated.");
-        callback(null, users[0]);
+        else {
+          console.log("user " + users[0].uuid + " authenticated.");
+          callback(null, users[0]);
+        }
       }
     });
   }
