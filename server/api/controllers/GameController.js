@@ -33,6 +33,7 @@ module.exports = {
         else {
           var data = req.body;
           data.uuid = uuid.v4();
+          data.owner = user.uuid;
           Game.create(data).exec(function (err, game) {
             console.log('created game: ' + data.uuid);
             res.json(game);
