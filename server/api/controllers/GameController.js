@@ -11,7 +11,8 @@ module.exports = {
 	create: function(req, res){
     var data = req.body;
     data.uuid = uuid.v4();
-    Game.create(data).exec(function(err, game) {
+    Game.create(data).exec(function(err, game){
+      console.log('created game: ' + data.uuid);
       res.json(game);
     });
   },

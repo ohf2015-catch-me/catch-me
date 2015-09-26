@@ -15,6 +15,8 @@ module.exports = {
     data.game = req.param('gameId');
     Question.create(data).exec(function(err, question){
       res.json(question);
+      Game.find({'uuid': data.game}).populate('questions').exec(function (err, data) {
+      });
     });
   },
 
