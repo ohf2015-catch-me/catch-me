@@ -3,20 +3,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
+              android:orientation="vertical"
+              android:padding="10dp">
 <TextView
     android:id="@+id/t1"
     style="@style/headline"
-    android:text="Want to be a target/create game"
+    android:text="Create a game"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
- />
+/>
 <TextView
     android:id="@+id/t2"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="Give the scouts an intial hint..."
-	/>
+    android:paddingTop="10dp"/>
     <EditText
         android:id="@+id/create_game_text"
         android:layout_width="fill_parent"
@@ -35,7 +36,7 @@
 
     <Button android:layout_width="match_parent" android:id="@+id/Upload"
 
-        android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+        android:layout_height="wrap_content"
 
          android:text="Create Game" />
 
