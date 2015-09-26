@@ -46,7 +46,11 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  ,'post /game': 'GameController.create'
+  ,'put /game/:gameId/question/:questionId': 'QuestionController.answerQuestion'
+  ,'post /game/:gameId/question': 'QuestionController.create'
+  ,'post /game/:gameId/hint': 'HintController.create'
   ,'get /game/:gameId': 'GameController.getDetails'
+  ,'post /game': 'GameController.create'
+
 
 };

@@ -11,7 +11,7 @@ import java.net.URL;
 public final class ApiUrls {
 
     protected static final String PROTOCOL = "http";
-    protected static final String HOST = "localhost";
+    protected static final String HOST = "46.101.236.249";
     protected static final int PORT = 1337;
 
     private static URL buildURL(String path) {
@@ -28,5 +28,13 @@ public final class ApiUrls {
 
     public static URL createGame() {
         return buildURL("/game");
+    }
+
+    public static URL createQuestion(String gameId) {
+        return buildURL("/game/"+gameId+"/question");
+    }
+
+    public static URL answerQuestion(String gameId, String questionId) {
+        return buildURL("/game/"+gameId+"/question/" + questionId);
     }
 }
