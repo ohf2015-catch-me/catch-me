@@ -6,8 +6,12 @@
  */
 
 module.exports = {
-  User.create(req.body).done(function(err, user) {
-    res.json(user));
-  });
+
+  create: function(req, res) {
+    User.create(req.body).done(function(err, user) {
+      res.json(user);
+    })
+  }
+
 };
 

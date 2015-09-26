@@ -8,7 +8,9 @@
 module.exports = {
 
   attributes: {
-
+    game: {
+      model: 'game'
+    }
   }
 };
 

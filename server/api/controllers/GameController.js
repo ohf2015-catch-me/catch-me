@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing games
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-var uuid = require('uuid');
+var uuid = require('node-uuid');
 
 module.exports = {
 
