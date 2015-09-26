@@ -8,11 +8,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-<<<<<<< HEAD
-        android:theme="@style/hackTheme" >
-=======
-        android:theme="@style/AppTheme">
->>>>>>> 2cdcfd54ae0f7efa334d70a25f952c89717efba5
+        android:theme="@style/hackTheme">
         <activity
             android:name=".GamesListActivity"
             android:label="@string/app_name">

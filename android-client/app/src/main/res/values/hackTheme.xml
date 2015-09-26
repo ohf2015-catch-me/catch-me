@@ -11,7 +11,12 @@
 	</style>
 	
 	<style name="headline">
-		<item name="android:textColor">@color/headlines</item>
+		<item name="android:textColor">@color/headline</item>
 		<item name="android:textSize">40dp</item>
+	</style>
+
+	<style name="headline2">
+		<item name="android:textColor">@color/headline2</item>
+		<item name="android:textSize">20dp</item>
 	</style>
 </resources>

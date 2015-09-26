@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+              android:orientation="vertical"
+              android:padding="10dp">
 
     <LinearLayout
         android:id="@+id/top_layover"
@@ -14,9 +15,8 @@
 
         <TextView
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:text="Initial hint/name of the game"
+            android:text="Name of the game"
             style="@style/headline"
             android:layout_width="wrap_content" />
     </LinearLayout>
@@ -32,7 +32,8 @@
         android:layout_alignParentStart="true"
         android:layout_above="@+id/question"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_weight="1"/>
     <EditText
 
         android:id="@+id/question"
@@ -77,4 +78,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

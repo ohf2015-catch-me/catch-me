@@ -8,7 +8,6 @@
 	<TextView
 	    style="@style/headline"
 	    android:layout_height="wrap_content"
-	    android:layout_gravity="center"
 	    android:gravity="center"
 	    android:text="List of games"
 	    android:layout_width="wrap_content" />

@@ -14,14 +14,16 @@
 />
 <TextView
     android:id="@+id/t2"
+    style="@style/headline2"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Give the scouts an intial hint..."
+    android:text="Give the scouts an intial hint ..."
     android:paddingTop="10dp"/>
     <EditText
         android:id="@+id/create_game_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:hint="e.g. I can see a lot of green"
 />
     <TextView
         android:layout_width="fill_parent"

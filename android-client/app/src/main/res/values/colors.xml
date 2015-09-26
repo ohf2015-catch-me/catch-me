@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="background">#1276F7</color>
-	<color name="headlines">#ffffff</color>
+	<color name="headline">#ffffff</color>
+	<color name="headline2">#ffffff</color>
 </resources>
