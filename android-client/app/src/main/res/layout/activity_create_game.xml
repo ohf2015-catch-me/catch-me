@@ -25,22 +25,37 @@
         android:layout_height="wrap_content"
         android:hint="e.g. I can see a lot of green"
 />
-    <TextView
-        android:layout_width="fill_parent"
-        android:text="Take a picture of your environment..."
-        android:layout_height="wrap_content"
-/>
-    <ImageView android:id="@+id/ImageView"
-        android:layout_width="fill_parent"
 
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<TextView
+		    style="@style/headline2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Take a picture of your environment..."
+	/>
+
+		<Button android:layout_width="wrap_content" android:id="@+id/TakePicture"
+
+		        android:layout_height="wrap_content"
+
+		        android:text="Take Picture"
+		        android:layout_weight="1"/>
+	</LinearLayout>
+
+	<ImageView android:id="@+id/ImageView"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
                android:layout_weight="1"/>
 
-    <Button android:layout_width="match_parent" android:id="@+id/Upload"
+	<Button android:layout_width="match_parent" android:id="@+id/createGame"
 
         android:layout_height="wrap_content"
 
-         android:text="Create Game" />
-
+         android:text="Create Game"
+		/>
 
 </LinearLayout>

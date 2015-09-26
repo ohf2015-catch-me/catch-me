@@ -36,6 +36,9 @@ module.exports = {
     ,owner: {
       model: 'user'
     }
+    ,isActive: function() {
+      return this.endTime < Date.now();
+    }
   }
 };
 

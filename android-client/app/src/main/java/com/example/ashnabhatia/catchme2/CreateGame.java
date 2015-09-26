@@ -17,7 +17,10 @@ public class CreateGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_game);
 
-        Button button = (Button) findViewById(R.id.Upload);
+
+
+        Button button = (Button) findViewById(R.id.createGame);
+
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TextView text = (TextView)findViewById(R.id.create_game_text);
