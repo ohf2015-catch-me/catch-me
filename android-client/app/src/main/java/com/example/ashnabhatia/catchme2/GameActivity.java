@@ -138,6 +138,11 @@ public class GameActivity extends Activity {
                 findViewById(R.id.submit_hint_form).setVisibility(isTarget ? View.VISIBLE : View.GONE);
                 findViewById(R.id.submit_question_form).setVisibility(isTarget ? View.GONE : View.VISIBLE);
             }
+
+            @Override
+            public void onError(Exception err) {
+
+            }
         });
     }
 

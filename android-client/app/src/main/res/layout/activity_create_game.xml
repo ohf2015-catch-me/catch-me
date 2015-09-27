@@ -53,6 +53,15 @@
         android:layout_height="wrap_content"
                android:layout_weight="1"/>
 
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/spinner"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true" />
+
 	<Button android:layout_width="match_parent" android:id="@+id/createGame"
 
         android:layout_height="wrap_content"

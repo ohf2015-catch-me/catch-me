@@ -122,6 +122,11 @@ public class GamesListActivity extends ListActivity {
                     }).execute();
                 }
             }
+
+            @Override
+            public void onError(Exception err) {
+
+            }
         });
 
         findViewById(R.id.my_game).setOnClickListener(new View.OnClickListener() {

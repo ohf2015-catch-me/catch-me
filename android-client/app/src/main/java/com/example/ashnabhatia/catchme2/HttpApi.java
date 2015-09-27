@@ -46,6 +46,7 @@ public final class HttpApi {
 
     public interface ApiListener<T> {
         void onDone(T result);
+        void onError(Exception err);
     }
 
     public static void setupAuth(Context context) {
@@ -94,7 +95,6 @@ public final class HttpApi {
         try {
             JSONObject data = new JSONObject();
             data.put("text", text);
-            // TODO:
             data.put("picture", pictureBase64);
 
             client.post(null, ApiUrls.createGame().toString(), new StringEntity(data.toString()),
