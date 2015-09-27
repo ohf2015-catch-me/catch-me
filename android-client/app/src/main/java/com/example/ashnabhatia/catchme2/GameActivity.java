@@ -13,11 +13,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-<<<<<<< HEAD
 import android.widget.LinearLayout;
-=======
 import android.widget.ImageView;
->>>>>>> c2a8cc84faeeed4db50581b0c0e2cecd95fda8c4
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
