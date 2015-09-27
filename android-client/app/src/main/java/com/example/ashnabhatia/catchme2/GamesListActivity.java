@@ -3,11 +3,13 @@ package com.example.ashnabhatia.catchme2;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,7 +47,20 @@ public class GamesListActivity extends ListActivity implements View.OnClickListe
                 JSONObject data = getItem(position);
 
                 if(data != null) {
-                    ((TextView) view.findViewById(R.id.games_list_row_text)).setText(data.optString("text"));
+                    ((TextView) view.findViewById(R.id.games_list_row_text))
+                            .setText(data.optString("text"));
+
+                    final ImageView picture = (ImageView) view.findViewById(R.id.games_list_row_picture);
+                    picture.setImageResource(android.R.color.transparent);
+                    String picData = data.optString("picture");
+                    (new PictureHandling.DecodeTask(picData) {
+                        @Override
+                        protected void onPostExecute(Bitmap bitmap) {
+                            if(bitmap != null) {
+                                picture.setImageBitmap(bitmap);
+                            }
+                        }
+                    }).execute();
                 }
 
                 return view;

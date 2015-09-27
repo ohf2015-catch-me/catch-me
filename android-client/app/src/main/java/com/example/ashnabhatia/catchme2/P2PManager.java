@@ -40,8 +40,8 @@ public class P2PManager {
     private P2PManager(final Context context) {
 
         // fake data
-        games.put(UUID.randomUUID(), "57439a05-3506-4aaa-ba81-96d2cad867af");
-        games.put(UUID.randomUUID(), "a0dc3db1-708e-48e2-a4e8-72205de1695b");
+        games.put(UUID.randomUUID(), "56bf1ae9-7c04-4460-8b02-399ccb57fed0");
+        games.put(UUID.randomUUID(), "f7355cf2-504d-4b66-81d4-872445ca57b8");
 
         final int statusCode = KitClient.isP2PServicesAvailable(context);
         if (statusCode == ConnectionResult.SUCCESS) {

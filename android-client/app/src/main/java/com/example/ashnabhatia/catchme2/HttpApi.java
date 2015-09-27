@@ -84,12 +84,12 @@ public final class HttpApi {
         client.get(ApiUrls.myGame().toString(), new ObjectListenerResponseHandler(listener));
     }
 
-    public static void createGame(final String text, final Bitmap picture, ApiObjectListener listener) {
+    public static void createGame(final String text, final String pictureBase64, ApiObjectListener listener) {
         try {
             JSONObject data = new JSONObject();
             data.put("text", text);
             // TODO:
-            data.put("picture", "=");
+            data.put("picture", pictureBase64);
 
             client.post(null, ApiUrls.createGame().toString(), new StringEntity(data.toString()),
                     "application/json", new ObjectListenerResponseHandler(listener));
