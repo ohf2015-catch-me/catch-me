@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -179,6 +180,26 @@ public class GameActivity extends Activity {
                         });
                     }
                 }).execute();
+            }
+        });
+
+        ((Button)findViewById(R.id.submit_question_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText text = ((EditText) findViewById(R.id.question_text));
+
+                HttpApi.createQuestion(gameId, text.getText().toString(), new HttpApi.ApiObjectListener() {
+                    @Override
+                    public void onDone(JSONObject result) {
+                        text.setText("");
+                        reload();
+                    }
+
+                    @Override
+                    public void onError(Exception err) {
+
+                    }
+                });
             }
         });
     }
