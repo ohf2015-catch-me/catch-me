@@ -44,6 +44,11 @@ public abstract class GamesListAdapter extends BaseAdapter
                         onGamesUpdated();
                     }
                 }
+
+                @Override
+                public void onError(Exception err) {
+
+                }
             });
         }
     };

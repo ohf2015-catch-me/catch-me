@@ -1,5 +1,6 @@
 package com.example.ashnabhatia.catchme2;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,7 +21,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-public class CreateGame extends AppCompatActivity {
+public class CreateGame extends Activity {
     private static final int TAKE_PICTURE = 1;
     private File outputFile;
     private ProgressDialog dialog;
@@ -45,45 +46,36 @@ public class CreateGame extends AppCompatActivity {
 
         ((Button) findViewById(R.id.createGame)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            (new PictureHandling.ResizeEncodeTask(outputFile.getAbsolutePath()) {
-                @Override
-                protected void onPostExecute(String picBase64) {
-                    TextView text = (TextView) findViewById(R.id.create_game_text);
-                    HttpApi.createGame(text.getText().toString(), picBase64, new HttpApi.ApiObjectListener() {
-                        @Override
-                        public void onDone(JSONObject result) {
-                            Toast.makeText(CreateGame.this, "Game created!", Toast.LENGTH_SHORT);
-                            finish();
-                        }
-                    });
-                }
-            }).execute();
+
+                findViewById(R.id.spinner).setVisibility(View.VISIBLE);
+                findViewById(R.id.createGame).setVisibility(View.GONE);
+
+
+                (new PictureHandling.ResizeEncodeTask(outputFile.getAbsolutePath()) {
+                    @Override
+                    protected void onPostExecute(String picBase64) {
+                        TextView text = (TextView) findViewById(R.id.create_game_text);
+                        HttpApi.createGame(text.getText().toString(), picBase64, new HttpApi.ApiObjectListener() {
+                            @Override
+                            public void onDone(JSONObject result) {
+                                Toast.makeText(CreateGame.this, "Game created!", Toast.LENGTH_SHORT);
+                                finish();
+
+                                findViewById(R.id.spinner).setVisibility(View.GONE);
+                                findViewById(R.id.createGame).setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onError(Exception err) {
+                                findViewById(R.id.spinner).setVisibility(View.GONE);
+                                findViewById(R.id.createGame).setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                }).execute();
 
             }
         });
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_game, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 
