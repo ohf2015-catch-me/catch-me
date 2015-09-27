@@ -1,18 +1,27 @@
 package com.example.ashnabhatia.catchme2;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,6 +34,9 @@ public class GameActivity extends Activity {
 
     protected boolean isTarget;
     protected String gameId;
+
+    private static final int TAKE_PICTURE = 1;
+    private File outputFile;
 
     protected TimelineListAdapter mListAdapter;
 
@@ -122,7 +134,67 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         mListAdapter = new TimelineListAdapter();
         setContentView(R.layout.activity_game);
+
         ((ListView)findViewById(R.id.game_timeline)).setAdapter(mListAdapter);
+
+        ((Button)findViewById(R.id.create_hint_picture_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                outputFile = PictureHandling.createImageFile();
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));
+
+                startActivityForResult(intent, TAKE_PICTURE);
+            }
+        });
+
+        ((Button)findViewById(R.id.submit_hint_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(outputFile == null) {
+                    return;
+                }
+
+                (new PictureHandling.ResizeEncodeTask(outputFile.getAbsolutePath()) {
+                    @Override
+                    protected void onPostExecute(String picBase64) {
+                        final TextView text = (TextView) findViewById(R.id.hint_text);
+                        HttpApi.createHint(gameId, text.getText().toString(), picBase64, new HttpApi.ApiObjectListener() {
+                            @Override
+                            public void onDone(JSONObject result) {
+                                text.setText("");
+
+                                ((ImageView) findViewById(R.id.create_hint_picture)).setImageResource(android.R.color.transparent);
+                                outputFile = null;
+
+                                reload();
+                            }
+
+                            @Override
+                            public void onError(Exception err) {
+                            }
+                        });
+                    }
+                }).execute();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == TAKE_PICTURE && resultCode == RESULT_OK) {
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 8;
+            Bitmap bitmap = BitmapFactory.decodeFile(outputFile.getAbsolutePath(), options);
+
+            ((ImageView) findViewById(R.id.create_hint_picture)).setImageBitmap(bitmap);
+
+        }
     }
 
     @Override
