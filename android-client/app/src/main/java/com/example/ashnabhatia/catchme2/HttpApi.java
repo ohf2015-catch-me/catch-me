@@ -3,49 +3,36 @@ package com.example.ashnabhatia.catchme2;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.util.Base64;
-import android.util.Log;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Created by bananer on 26.09.15.
  */
 public final class HttpApi {
 
+    protected static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
     private static final String userIdHeaderField = "catch-me-uuid";
     private static String userId;
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        try {
+    protected static AsyncHttpClient client = new AsyncHttpClient();
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = "";
-            String result = "";
-            while ((line = bufferedReader.readLine()) != null)
-                result += line;
-
-            inputStream.close();
-            return result;
-        }
-        catch(EOFException ex) {
-            return "";
-        }
-    }
 
     private static String encodeBitmap(Bitmap bitmap) {
         if(bitmap == null) {
@@ -57,147 +44,6 @@ public final class HttpApi {
         return Base64.encodeToString(b, Base64.DEFAULT);
     }
 
-    protected abstract static class Request<T> extends AsyncTask<Void, Void, T> {
-        protected ApiListener<T> mListener;
-        protected URL mUrl;
-
-        public Request(URL url, ApiListener<T> listener) {
-            mListener = listener;
-            mUrl = url;
-        }
-
-        protected abstract HttpURLConnection getConnection() throws Exception;
-
-        protected final T doInBackground(Void... params) {
-            InputStream inputStream = null;
-            String result = "";
-            try {
-
-                HttpURLConnection conn = getConnection();
-
-                conn.setRequestProperty(userIdHeaderField, userId);
-
-                try {
-                    conn.connect();
-                    InputStream in = new BufferedInputStream(conn.getInputStream());
-                    result = convertInputStreamToString(in);
-                }
-                finally {
-                    conn.disconnect();
-                }
-
-                return convertResponse(result);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-        public abstract T convertResponse(String response) throws Exception;
-
-        @Override
-        protected void onPostExecute(T t) {
-            mListener.onDone(t);
-        }
-    }
-
-    protected abstract static class GetRequest<T> extends Request<T> {
-
-        public GetRequest(URL url, ApiListener<T> listener) {
-            super(url, listener);
-        }
-
-        public HttpURLConnection getConnection() throws Exception {
-            return (HttpURLConnection) mUrl.openConnection();
-        }
-    }
-
-    protected abstract static class DataRequest<T> extends Request<T> {
-        public DataRequest(URL url, ApiListener<T> listener) {
-            super(url, listener);
-        }
-
-        protected abstract JSONObject getData() throws Exception;
-
-        public HttpURLConnection getConnection() throws Exception {
-            HttpURLConnection conn = (HttpURLConnection) mUrl.openConnection();
-
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            DataOutputStream printout = new DataOutputStream(conn.getOutputStream ());
-            printout.writeBytes(URLEncoder.encode(getData().toString(), "UTF-8"));
-            printout.flush();
-            printout.close();
-
-            return conn;
-        }
-    }
-
-    protected abstract static class PostRequest<T> extends DataRequest<T> {
-
-        public PostRequest(URL url, ApiListener<T> listener) {
-            super(url, listener);
-        }
-
-        public HttpURLConnection getConnection() throws Exception {
-            HttpURLConnection ret = super.getConnection();
-            ret.setRequestMethod("POST");
-            return ret;
-        }
-    }
-
-
-    protected abstract static class PutRequest<T> extends DataRequest<T> {
-
-        public PutRequest(URL url, ApiListener<T> listener) {
-            super(url, listener);
-        }
-
-        public HttpURLConnection getConnection() throws Exception {
-            HttpURLConnection ret = super.getConnection();
-            ret.setRequestMethod("POST");
-            return ret;
-        }
-    }
-
-    protected static class GetJSONObjectRequest extends GetRequest<JSONObject> {
-
-        public GetJSONObjectRequest(URL url, ApiListener<JSONObject> listener) {
-            super(url, listener);
-        }
-
-        @Override
-        public JSONObject convertResponse(String response) throws Exception {
-            return new JSONObject(response);
-        }
-    }
-
-    protected abstract static class PostJSONObjectRequest extends PostRequest<JSONObject> {
-
-        public PostJSONObjectRequest(URL url, ApiListener<JSONObject> listener) {
-            super(url, listener);
-        }
-
-        @Override
-        public JSONObject convertResponse(String response) throws Exception {
-            return new JSONObject(response);
-        }
-    }
-
-
-    protected abstract static class PutJSONObjectRequest extends PutRequest<JSONObject> {
-
-        public PutJSONObjectRequest(URL url, ApiListener<JSONObject> listener) {
-            super(url, listener);
-        }
-
-        @Override
-        public JSONObject convertResponse(String response) throws Exception {
-            return new JSONObject(response);
-        }
-    }
-
     public interface ApiListener<T> {
         void onDone(T result);
     }
@@ -207,57 +53,108 @@ public final class HttpApi {
         userId = prefs.getString("userId", "");
         if(userId.equals("")) {
             userId = UUID.randomUUID().toString();
-            prefs.edit().putString("userId", userId);
+            prefs.edit().putString("userId", userId).commit();
         }
+        client.addHeader(userIdHeaderField, userId);
     }
 
     public interface ApiObjectListener extends ApiListener<JSONObject> {}
 
+    public static class ObjectListenerResponseHandler extends AsyncHttpResponseHandler {
+
+        private ApiObjectListener mListener;
+        public ObjectListenerResponseHandler(ApiObjectListener listener) {
+            mListener = listener;
+        }
+
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            try {
+                mListener.onDone(new JSONObject(new String(responseBody)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+        }
+    }
+
     public static void getGameDetails(String gameId, ApiObjectListener listener) {
-        (new GetJSONObjectRequest(ApiUrls.gameDetails(gameId), listener)).execute();
+        client.get(ApiUrls.gameDetails(gameId).toString(), new ObjectListenerResponseHandler(listener));
     }
 
     public static void getMyGame(ApiObjectListener listener) {
-        (new GetJSONObjectRequest(ApiUrls.myGame(), listener)).execute();
+        client.get(ApiUrls.myGame().toString(), new ObjectListenerResponseHandler(listener));
     }
 
-    public static void createGame(final String text, final Bitmap picture, ApiObjectListener listener) {
-        (new PostJSONObjectRequest(ApiUrls.createGame(), listener) {
-            @Override
-            protected JSONObject getData() throws Exception {
-                JSONObject data = new JSONObject();
-                data.put("text", text);
-                data.put("picture", encodeBitmap(picture));
-                return data;
-            }
-        }).execute();
+    public static void createGame(final String text, final String pictureBase64, ApiObjectListener listener) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put("text", text);
+            // TODO:
+            data.put("picture", pictureBase64);
+
+            client.post(null, ApiUrls.createGame().toString(), new StringEntity(data.toString()),
+                    "application/json", new ObjectListenerResponseHandler(listener));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void createQuestion(String gameId, final String text, ApiObjectListener listener) {
-        (new PostJSONObjectRequest(ApiUrls.createQuestion(gameId), listener) {
-            @Override
-            protected JSONObject getData() throws Exception {
-                JSONObject data = new JSONObject();
-                data.put("text", text);
-                return data;
-            }
-        }).execute();
+        try {
+            JSONObject data = new JSONObject();
+            data.put("text", text);
+
+            client.post(null, ApiUrls.createQuestion(gameId).toString(), new StringEntity(data.toString()),
+                    "application/json", new ObjectListenerResponseHandler(listener));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Date parseDate(String strDate) {
+        try {
+            return dateFormat.parse(strDate);
+        } catch (ParseException e) {
+            return new Date(0);
+        }
     }
 
 
     public static void answerQuestion(String gameId, String questionId, final String answer, ApiObjectListener listener) {
-        (new PostJSONObjectRequest(ApiUrls.createQuestion(gameId), listener) {
-            @Override
-            protected JSONObject getData() throws Exception {
-                JSONObject data = new JSONObject();
-                data.put("answer", answer);
-                return data;
-            }
-        }).execute();
+
+        try {
+            JSONObject data = new JSONObject();
+            data.put("answer", answer);
+
+            client.put(null, ApiUrls.createQuestion(gameId).toString(), new StringEntity(data.toString()),
+                    "application/json", new ObjectListenerResponseHandler(listener));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     public static void createHint(String gameId, final String text, final Bitmap picture, ApiObjectListener listener) {
+        /*try {
+            JSONObject data = new JSONObject();
+            data.put("text", text);
+
+            client.post(null, ApiUrls.createHint(gameId).toString(), new StringEntity(data.toString()),
+                    "application/json", new ObjectListenerResponseHandler(listener));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         (new PostJSONObjectRequest(ApiUrls.createQuestion(gameId), listener) {
             @Override
             protected JSONObject getData() throws Exception {
@@ -266,19 +163,19 @@ public final class HttpApi {
                 data.put("picture", encodeBitmap(picture));
                 return data;
             }
-        }).execute();
+        }).execute();*/
     }
 
 
     public static void foundTarget(String gameId, final String secret, ApiObjectListener listener) {
-        (new PostJSONObjectRequest(ApiUrls.createQuestion(gameId), listener) {
+        /*(new PostJSONObjectRequest(ApiUrls.createQuestion(gameId), listener) {
             @Override
             protected JSONObject getData() throws Exception {
                 JSONObject data = new JSONObject();
                 data.put("secret", secret);
                 return data;
             }
-        }).execute();
+        }).execute();*/
     }
 
 }

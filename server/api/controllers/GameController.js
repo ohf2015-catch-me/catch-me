@@ -23,7 +23,7 @@ var findActiveGameForUser = function (user, callback) {
       callback(activeGames[0]);
     }
   });
-}
+};
 
 module.exports = {
 
@@ -39,6 +39,7 @@ module.exports = {
           data.uuid = uuid.v4();
           data.owner = user.uuid;
           data.secret = Math.floor(Math.random() * (9999 - 1000)) + 1000;
+          data.endTime = '2015-09-29T00:00:00Z';
           Game.create(data).exec(function (err, game) {
             if(err) {
               console.log("error creating game: ",err)

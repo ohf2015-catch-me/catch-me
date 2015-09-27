@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".CatchMeApplication"
         android:allowBackup="true"
@@ -21,16 +26,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Scout"
+            android:name=".GameActivity"
             android:label="@string/title_activity_scout"></activity>
         <activity
             android:name=".CreateGame"
             android:label="CreateGame">
-
-        </activity>
-        <activity
-            android:name=".Target"
-            android:label="Target">
 
         </activity>
 

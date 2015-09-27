@@ -2,41 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="10dp">
+    android:orientation="vertical"
+    android:padding="10dp">
 
-	<TextView
-	    style="@style/headline"
-	    android:layout_height="wrap_content"
-	    android:gravity="center"
-	    android:text="List of games"
-	    android:layout_width="wrap_content" />
+    <TextView
+        style="@style/headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="List of games" />
 
-	<ScrollView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/scrollView"
-		android:fillViewport="true"
-		android:layout_weight="1">
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-		<ListView
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-	        android:id="@android:id/list"
-		    android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/my_game"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_blue_light"
+                android:orientation="horizontal">
 
-	        android:divider="@android:color/transparent"
-	        android:clickable="false"/>
-	</ScrollView>
+                <ImageView
+                    android:id="@+id/my_game_picture"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
 
-	<Button
-	    android:id="@+id/buttoncg"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:text="Create Game"
-	    android:layout_gravity="bottom"
-	    android:layout_weight="0"
-	    style="@style/button"
-		/>
+                <TextView
+                    android:id="@+id/my_game_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
+
+            <ListView
+
+                android:id="@android:id/list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+
+                android:clickable="false"
+                android:divider="@android:color/transparent" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/buttoncg"
+        style="@style/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="0"
+        android:text="Create Game" />
 
 </LinearLayout>

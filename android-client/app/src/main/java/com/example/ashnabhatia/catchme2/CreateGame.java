@@ -1,17 +1,13 @@
 package com.example.ashnabhatia.catchme2;
 
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,20 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
-public class CreateGame extends AppCompatActivity implements View.OnClickListener {
+public class CreateGame extends AppCompatActivity {
     private static final int TAKE_PICTURE = 1;
-    private Uri outputFileUri;
-    private ImageView imgView;
-    private Bitmap bitmap;
+    private File outputFile;
     private ProgressDialog dialog;
 
     @Override
@@ -42,22 +30,35 @@ public class CreateGame extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_game);
 
-        imgView = (ImageView) findViewById(R.id.ImageView1);
 
-        Button mUpload = (Button) findViewById(R.id.TakePicture);
-        mUpload.setOnClickListener(this);
-        Button button = (Button) findViewById(R.id.createGame);
-
-        button.setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.TakePicture)).setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                TextView text = (TextView) findViewById(R.id.create_game_text);
-                HttpApi.createGame(text.getText().toString(), null, new HttpApi.ApiObjectListener() {
-                    @Override
-                    public void onDone(JSONObject result) {
-                        Toast.makeText(CreateGame.this, "Game created!", Toast.LENGTH_SHORT);
-                        finish();
-                    }
-                });
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                outputFile = PictureHandling.createImageFile();
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));
+
+                startActivityForResult(intent, TAKE_PICTURE);
+            }
+        });
+
+
+        ((Button) findViewById(R.id.createGame)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            (new PictureHandling.ResizeEncodeTask(outputFile.getAbsolutePath()) {
+                @Override
+                protected void onPostExecute(String picBase64) {
+                    TextView text = (TextView) findViewById(R.id.create_game_text);
+                    HttpApi.createGame(text.getText().toString(), picBase64, new HttpApi.ApiObjectListener() {
+                        @Override
+                        public void onDone(JSONObject result) {
+                            Toast.makeText(CreateGame.this, "Game created!", Toast.LENGTH_SHORT);
+                            finish();
+                        }
+                    });
+                }
+            }).execute();
+
             }
         });
     }
@@ -85,50 +86,17 @@ public class CreateGame extends AppCompatActivity implements View.OnClickListene
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.TakePicture:
-
-                startSecondActivity();
-                break;
-
-
-            default:
-                break;
-        }
-    }
-
-    public void startSecondActivity() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File file = new File(Environment.getExternalStorageDirectory(), "test.jpg");
-        outputFileUri = Uri.fromFile(file);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-        startActivityForResult(intent, TAKE_PICTURE);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == TAKE_PICTURE) {
-            //Uri contentURI = Uri.parse(data.getDataString());
+        if (requestCode == TAKE_PICTURE && resultCode == RESULT_OK) {
 
-            ContentResolver cr = getContentResolver();
-            InputStream in = null;
-            try {
-                in = cr.openInputStream(outputFileUri);
-                Log.i("URI ===> ", outputFileUri.getPath());
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            if (in != null) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 8;
+            Bitmap bitmap = BitmapFactory.decodeFile(outputFile.getAbsolutePath(), options);
 
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-                bitmap = BitmapFactory.decodeStream(in, null, options);
-
-            }
+            ((ImageView) findViewById(R.id.PicturePreview)).setImageBitmap(bitmap);
 
         }
     }
