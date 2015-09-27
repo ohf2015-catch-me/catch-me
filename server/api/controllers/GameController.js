@@ -15,9 +15,11 @@ var findActiveGameForUser = function (user, callback) {
       return game.isActive();
     });
     if (activeGames.length == 0) {
+      console.log("no active games for user");
       callback(null);
     }
     else {
+      console.log("found active game for user");
       callback(activeGames[0]);
     }
   });
@@ -29,6 +31,7 @@ module.exports = {
     UserService.findUserForRequest(req, function (err, user) {
       findActiveGameForUser(user, function (game) {
         if (game) {
+          console.log('could not create game, already exists. ', game);
           res.badRequest();
         }
         else {
@@ -37,8 +40,13 @@ module.exports = {
           data.owner = user.uuid;
           data.secret = Math.floor(Math.random() * (9999 - 1000)) + 1000;
           Game.create(data).exec(function (err, game) {
-            console.log('created game: ' + data.uuid);
-            res.json(game);
+            if(err) {
+              console.log("error creating game: ",err)
+            }
+            else {
+              console.log('created game: ' + game);
+              res.json(game);
+            }
           });
         }
       });
