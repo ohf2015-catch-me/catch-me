@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -25,12 +26,14 @@ public class GameActivity extends Activity {
     protected boolean isTarget;
     protected String gameId;
 
+    protected TimelineListAdapter mListAdapter;
+
     protected class TimelineListAdapter extends BaseAdapter {
 
         protected List<JSONObject> mEntries;
 
-        public TimelineListAdapter(JSONObject rawData) throws JSONException{
-            setData(rawData);
+        public TimelineListAdapter() {
+            mEntries = new ArrayList<>();
         }
 
         public void setData(JSONObject rawData) throws JSONException{
@@ -85,12 +88,12 @@ public class GameActivity extends Activity {
             LayoutInflater li = getLayoutInflater();
 
             if(type.equals("hint")) {
-                View v = li.inflate(R.layout.timeline_entry_hint, parent);
+                View v = li.inflate(R.layout.timeline_entry_hint, parent, false);
 
                 return v;
             }
             else if(type.equals("question")) {
-                View v = li.inflate(R.layout.timeline_entry_question, parent);
+                View v = li.inflate(R.layout.timeline_entry_question, parent, false);
 
                 String answer = entry.optString("answer");
                 if(answer != null && !answer.isEmpty()) {
@@ -117,7 +120,9 @@ public class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mListAdapter = new TimelineListAdapter();
         setContentView(R.layout.activity_game);
+        ((ListView)findViewById(R.id.game_timeline)).setAdapter(mListAdapter);
     }
 
     @Override
@@ -137,6 +142,12 @@ public class GameActivity extends Activity {
 
                 findViewById(R.id.submit_hint_form).setVisibility(isTarget ? View.VISIBLE : View.GONE);
                 findViewById(R.id.submit_question_form).setVisibility(isTarget ? View.GONE : View.VISIBLE);
+
+                try {
+                    mListAdapter.setData(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
