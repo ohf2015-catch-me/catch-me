@@ -40,8 +40,13 @@ module.exports = {
           data.owner = user.uuid;
           data.secret = Math.floor(Math.random() * (9999 - 1000)) + 1000;
           Game.create(data).exec(function (err, game) {
-            console.log('created game: ' + game);
-            res.json(game);
+            if(err) {
+              console.log("error creating game: ",err)
+            }
+            else {
+              console.log('created game: ' + game);
+              res.json(game);
+            }
           });
         }
       });
