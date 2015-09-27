@@ -26,16 +26,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Scout"
+            android:name=".GameActivity"
             android:label="@string/title_activity_scout"></activity>
         <activity
             android:name=".CreateGame"
             android:label="CreateGame">
-
-        </activity>
-        <activity
-            android:name=".Target"
-            android:label="Target">
 
         </activity>
 

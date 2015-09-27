@@ -12,6 +12,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 import cz.msebera.android.httpclient.Header;
@@ -21,6 +25,8 @@ import cz.msebera.android.httpclient.entity.StringEntity;
  * Created by bananer on 26.09.15.
  */
 public final class HttpApi {
+
+    protected static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     private static final String userIdHeaderField = "catch-me-uuid";
     private static String userId;
@@ -47,7 +53,7 @@ public final class HttpApi {
         userId = prefs.getString("userId", "");
         if(userId.equals("")) {
             userId = UUID.randomUUID().toString();
-            prefs.edit().putString("userId", userId);
+            prefs.edit().putString("userId", userId).commit();
         }
         client.addHeader(userIdHeaderField, userId);
     }
@@ -110,6 +116,14 @@ public final class HttpApi {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static Date parseDate(String strDate) {
+        try {
+            return dateFormat.parse(strDate);
+        } catch (ParseException e) {
+            return new Date(0);
         }
     }
 

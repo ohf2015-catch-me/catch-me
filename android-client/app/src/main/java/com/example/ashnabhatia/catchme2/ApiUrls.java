@@ -11,7 +11,7 @@ import java.net.URL;
 public final class ApiUrls {
 
     protected static final String PROTOCOL = "http";
-    protected static final String HOST = "46.101.236.249";
+    protected static final String HOST = "192.168.178.108";
     protected static final int PORT = 1337;
 
     private static URL buildURL(String path) {
