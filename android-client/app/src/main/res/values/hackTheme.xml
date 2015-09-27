@@ -31,6 +31,11 @@
 		<item name="android:textSize">25sp</item>
 	</style>
 
+	<style name="question">
+		<item name="android:textColor">@color/question</item>
+		<item name="android:textSize">25sp</item>
+	</style>
+
 	<style name="questionYes">
 		<item name="android:textColor">@color/questionYes</item>
 		<item name="android:textSize">25sp</item>
