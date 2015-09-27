@@ -41,7 +41,7 @@ module.exports = {
       , required: true
     }
     ,isActive: function() {
-      return this.endTime < Date.now();
+      return this.endTime > Date.now();
     }
   }
 };
