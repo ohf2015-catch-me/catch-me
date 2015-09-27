@@ -26,6 +26,10 @@ public final class ApiUrls {
         return buildURL("/game/" + gameId);
     }
 
+    public static URL myGame() {
+        return buildURL("/my-game");
+    }
+
     public static URL createGame() {
         return buildURL("/game");
     }

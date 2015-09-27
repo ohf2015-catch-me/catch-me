@@ -38,12 +38,14 @@
 	        android:text="Take a picture of your environment..."
 	/>
 
-		<Button android:layout_width="wrap_content" android:id="@+id/TakePicture"
-
+		<Button
+			style="@style/button"
+			android:layout_width="wrap_content"
+		        android:id="@+id/TakePicture"
 		        android:layout_height="wrap_content"
-
 		        android:text="Take Picture"
-		        android:layout_weight="1"/>
+		    android:textSize="13dp"
+			android:layout_weight="1"/>
 	</LinearLayout>
 
 	<ImageView android:id="@+id/ImageView1"
@@ -54,8 +56,13 @@
 	<Button android:layout_width="match_parent" android:id="@+id/createGame"
 
         android:layout_height="wrap_content"
+<<<<<<< HEAD
 
          android:text="Start Game"
+=======
+            style="@style/button"
+         android:text="Create Game"
+>>>>>>> eccb5949ff6f37e6a27b85d3a89439c53a3da54d
 		/>
 
 </LinearLayout>

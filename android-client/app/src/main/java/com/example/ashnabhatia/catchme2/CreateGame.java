@@ -54,6 +54,7 @@ public class CreateGame extends AppCompatActivity implements View.OnClickListene
                 HttpApi.createGame(text.getText().toString(), null, new HttpApi.ApiObjectListener() {
                     @Override
                     public void onDone(JSONObject result) {
+                        Toast.makeText(CreateGame.this, "Game created!", Toast.LENGTH_SHORT);
                         finish();
                     }
                 });

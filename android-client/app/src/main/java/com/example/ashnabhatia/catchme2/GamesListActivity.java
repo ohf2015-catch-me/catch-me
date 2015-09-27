@@ -27,6 +27,12 @@ public class GamesListActivity extends ListActivity implements View.OnClickListe
         mCreateGame = (Button)findViewById(R.id.buttoncg);
         mCreateGame.setOnClickListener(this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         mAdapter = new GamesListAdapter(this) {
             @Override
             public View getView(int position, View view, ViewGroup parent) {
@@ -59,13 +65,17 @@ public class GamesListActivity extends ListActivity implements View.OnClickListe
             }
         });
         setListAdapter(mAdapter);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // TODO: reload games
+        
+        HttpApi.getMyGame(new HttpApi.ApiObjectListener() {
+            @Override
+            public void onDone(JSONObject result) {
+                if (result != null) {
+                    ((Button) findViewById(R.id.buttoncg)).setVisibility(View.GONE);
+                    P2PManager.getInstance(GamesListActivity.this)
+                            .setMyGameId(result.optString("uuid"));
+                }
+            }
+        });
     }
     @Override
     public void onClick(View v) {

@@ -85,7 +85,7 @@ public class P2PManager {
 
     public void setMyGameId(String gameId) {
         try {
-            client.getDiscoveryServices().setP2pDiscoveryInfo("Hello p2pkit".getBytes());
+            client.getDiscoveryServices().setP2pDiscoveryInfo((prefix +  gameId).getBytes());
         }
         catch(InfoTooLongException ex) {
             throw new RuntimeException(ex);

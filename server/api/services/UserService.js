@@ -3,11 +3,13 @@ module.exports = {
   findUserForRequest: function(req, callback) {
     var uuid = req.headers['catch-me-uuid'];
     if(!uuid) {
+      console.log("request with missing uuid!", err);
       callback("uuid not set", null);
       return;
     }
     User.find(uuid).exec(function(err, users){
       if(err) {
+        console.log("error retrieving user", err);
         callback(err, null);
       }
       else {

@@ -6,4 +6,5 @@
     <string name="title_activity_target">Target</string>
     <string name="title_activity_create_game">CreateGame</string>
     <string name="title_activity_scout">Scout</string>
+	<string name="action_abort_game">Abort Game</string>
 </resources>
