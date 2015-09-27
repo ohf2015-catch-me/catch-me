@@ -3,4 +3,8 @@
 	<color name="background">#1276F7</color>
 	<color name="headline">#ffffff</color>
 	<color name="headline2">#ffffff</color>
+	<color name="hint">#222222</color>
+	<color name="questionYes">#7BD47B</color>
+	<color name="questionNo">#D75454</color>
+	<color name="question">#ffffff</color>
 </resources>

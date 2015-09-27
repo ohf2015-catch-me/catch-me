@@ -143,7 +143,19 @@ public final class HttpApi {
     }
 
 
-    public static void createHint(String gameId, final String text, final Bitmap picture, ApiObjectListener listener) {
+    public static void createHint(String gameId, final String text, final String pictureBase64, ApiObjectListener listener) {
+        try {
+            JSONObject data = new JSONObject();
+            data.put("text", text);
+            data.put("picture", pictureBase64);
+
+            client.post(null, ApiUrls.createHint(gameId).toString(), new StringEntity(data.toString()),
+                    "application/json", new ObjectListenerResponseHandler(listener));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         /*try {
             JSONObject data = new JSONObject();
             data.put("text", text);

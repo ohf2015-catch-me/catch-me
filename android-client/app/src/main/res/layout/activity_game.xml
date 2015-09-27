@@ -34,12 +34,12 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/question1"
+                android:id="@+id/question_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:inputType="text"
-                android:text="question will come here" />
+                android:hint="question will come here" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,15 +76,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:inputType="text"
-                android:text="hint will come here" />
+                android:hint="hint will come here" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/create_hint_picture"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
                 <Button
                     style="@style/button"
+                    android:id="@+id/create_hint_picture_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"

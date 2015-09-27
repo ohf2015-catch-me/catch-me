@@ -41,4 +41,8 @@ public final class ApiUrls {
     public static URL answerQuestion(String gameId, String questionId) {
         return buildURL("/game/"+gameId+"/question/" + questionId);
     }
+
+    public static URL createHint(String gameId) {
+        return buildURL("/game/"+gameId+"/hint");
+    }
 }
