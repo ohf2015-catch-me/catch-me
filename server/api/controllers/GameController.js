@@ -56,7 +56,7 @@ module.exports = {
 
   getDetails: function(req, res) {
     var gameId = req.param('gameId');
-    Game.find(gameId).populate('questions').exec(function(err, games){
+    Game.find(gameId).populate('questions').populate('hints').exec(function(err, games){
       if (err || games.length == 0) {
         res.notFound();
       } else {
