@@ -17,13 +17,28 @@
 
 	<style name="headline2">
 		<item name="android:textColor">@color/headline2</item>
-		<item name="android:textSize">15dp</item>
+		<item name="android:textSize">15sp</item>
 	</style>
 
 	<style name="button">
 		<item name="android:background">@drawable/buttonshape</item>
 		<item name="android:textColor">@color/headline</item>
-		<item name="android:textSize">20dp</item>
+		<item name="android:textSize">20sp</item>
+	</style>
+
+	<style name="hint">
+		<item name="android:textColor">@color/hint</item>
+		<item name="android:textSize">25sp</item>
+	</style>
+
+	<style name="questionYes">
+		<item name="android:textColor">@color/questionYes</item>
+		<item name="android:textSize">25sp</item>
+	</style>
+
+	<style name="questionNo">
+		<item name="android:textColor">@color/questionNo</item>
+		<item name="android:textSize">25sp</item>
 	</style>
 
 </resources>
