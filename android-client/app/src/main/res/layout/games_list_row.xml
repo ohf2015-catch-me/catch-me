@@ -6,7 +6,8 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/games_list_row_picture"/>
+        android:id="@+id/games_list_row_picture"
+	    />
 
     <TextView
         android:layout_width="match_parent"
