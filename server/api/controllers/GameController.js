@@ -21,7 +21,7 @@ var findActiveGameForUser = function (user, callback) {
       callback(activeGames[0]);
     }
   });
-}
+};
 
 module.exports = {
 
