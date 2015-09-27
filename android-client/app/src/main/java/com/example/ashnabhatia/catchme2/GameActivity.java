@@ -6,7 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -94,18 +98,48 @@ public class GameActivity extends Activity {
             }
             else if(type.equals("question")) {
                 View v = li.inflate(R.layout.timeline_entry_question, parent, false);
+                ScrollView sv = new ScrollView(GameActivity.this);
 
+                LinearLayout ll = new LinearLayout(GameActivity.this);
+
+                ll.setOrientation(LinearLayout.VERTICAL);
+                String q1=entry.optString("question");
+
+                sv.addView(ll);
                 String answer = entry.optString("answer");
                 if(answer != null && !answer.isEmpty()) {
                     if(isTarget) {
 
+                        TextView tv2=new TextView(GameActivity.this);
+                        tv2.setText(q1);
+                        ll.addView(tv2);
+                        TextView tv3=new TextView(GameActivity.this);
+                        tv3.setText("Your Answer: "+answer);
+                        ll.addView(tv3);
+
                     }
                     else {
-                        // "waiting for answer"
+                        TextView tv2=new TextView(GameActivity.this);
+                        tv2.setText(q1);
+                        ll.addView(tv2);
+                        TextView tv3=new TextView(GameActivity.this);
+                        tv3.setText("The Answer Is: "+answer);
+                        ll.addView(tv3);
                     }
                 }
                 else {
-
+                    TextView tv1=new TextView(GameActivity.this);
+                    tv1.setText(q1);
+                    ll.addView(tv1);
+                    Button mYes=new Button(GameActivity.this);
+                    mYes.setText("YES");
+                    ll.addView(mYes);
+                    Button mNo=new Button(GameActivity.this);
+                    mNo.setText("NO");
+                    ll.addView(mNo);
+                    Button mNA=new Button(GameActivity.this);
+                    mNA.setText("NO ANSWER");
+                    ll.addView(mNA);
                 }
 
                 return v;

@@ -5,5 +5,16 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Hint!"/>
+        android:text="Hint Available!"/>
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ethint"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Photo Available!"/>
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 </LinearLayout>
